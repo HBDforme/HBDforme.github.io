@@ -79,7 +79,7 @@
         
         <div class="navbar-menu navbar-end">
             
-            <a class="navbar-item search" title="Buscar" href="javascript:;">
+            <a class="navbar-item search" title="Search" href="javascript:;">
                 <i class="fas fa-search"></i>
             </a>
             
@@ -102,6 +102,91 @@
         <article class="article content gallery" itemscope itemprop="blogPost">
     <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
         
+            <a href="/2018/08/19/csapp-01/" itemprop="url">csapp 第一章 初始计算机</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-08-19T12:41:17.000Z" itemprop="datePublished">Aug 19 2018</time>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            12 minutes read (About 1771 words)
+        </span>
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <h1 id="CS-APP"><a href="#CS-APP" class="headerlink" title="CS APP"></a>CS APP</h1><h1 id="Chapter1-初识计算机"><a href="#Chapter1-初识计算机" class="headerlink" title="Chapter1 初识计算机"></a>Chapter1 初识计算机</h1><ul>
+<li>系统中的所有信息——包括磁盘文件、内存中的存放的用户数据以及网络上传送的数据，都是由一串比特表示的。区分不同数据对象的唯一方法是我们读到这些数据对象时的上下文。</li>
+<li>hello.c的编译过程<ul>
+<li>预处理阶段：把头文件的内容插入到原C程序中，通常以.o作为文件扩展名。</li>
+<li>编译阶段：编译器（ccl）将文本文件hello.i翻译成hello.s，它包含一个汇编语言程序。这个程序包含了函数main的定义。</li>
+<li>汇编阶段：汇编器（as）把hello.s翻译成机器语言指令，把这些指令打包成一种叫做“可重定位目标程序（relocatable object program）”的格式，并将结果保存再目标文件hello.o中。hello.o文件是一个二进制文件，它包含的17个字节是main函数的指令编码。如果我们在文本编辑器中打开hello.o文件，将看到一堆乱码。</li>
+<li>链接阶段：hello程序掉哟个了printf函数，它是每个C编译器都提供的标准C库中的函数。printf函数存在一个名为printf.o的单独的预编译好了的目标文件，而这个文件必须以某种方式合并到我们的hello.o中。链接器（ld）就负责处理这种合并。结果就得到hello文件，它是一个可执行目标文件，可以加载到内存中，由系统执行。</li>
+</ul>
+</li>
+<li>理解编译器如何工作的作用：<ul>
+<li>优化程序性能</li>
+<li>理解链接时出现的错误</li>
+<li>避免安全漏洞</li>
+</ul>
+</li>
+<li>系统的硬件组成：<ul>
+<li>总线：贯穿整个系统的是一组电子管道，称作总线，它携带信息字节并负责各个部分间的信息传递。通常总线被设计成传送定长<code>字节块</code>，也叫做字。32位：字长4个字节，64位：字长8个字节。</li>
+<li>I/O设备：是系统与外部世界连接的通道。每个I/O设备都与总线相连。控制器和适配器的区别在于它们的封装方式不同。控制器是I/O设备本身或者系统的主印制电路板（即主板）上的<code>晶体组</code>。而适配器则是一块插在主板<code>插槽</code>上的卡。</li>
+<li>主存：主存是一个临时的存储设备，在处理器执行程序时，用来存放程序和程序处理的数据。</li>
+<li>处理器：<ul>
+<li>加载：从主存复制一个字或者字节到寄存器，以覆盖寄存器原来的内容。</li>
+<li>存储：从寄存器复制一个字或者字节到主存的某一位置，以覆盖这个位置原来的内容。</li>
+<li>操作：把两个寄存器的内容复制到<code>ALU</code>，ALU对这两个字做算术运算，并将结果存放到一个寄存器中，以覆盖这个寄存器原来的内容。</li>
+<li>跳转：从指令本身中抽取一个字，并将这个字复制到程序计数器PC中，以覆盖PC原来的值。</li>
+</ul>
+</li>
+<li>高速缓存器（cache memory,简称cache或高速缓存）：作为暂时的集结区域，存放处理器近期可能会需要的信息。</li>
+</ul>
+</li>
+<li><p>操作系统管理硬件</p>
+<ul>
+<li>操作系统的两个基本功能：<ul>
+<li>防止硬件失控的应用程序滥用</li>
+<li>向应用程序提供简单一致的机制来控制复杂而又通常大不相同的低级硬件设备。</li>
+</ul>
+</li>
+<li>几个基本的抽象概念：进程、虚拟内存、文件</li>
+<li>进程：进程是操作系统对一个正在运行的程序的一种抽象。并发运行：指的是一个进程的指令与另一个进程的指令是交错运行的。操作系统保存跟踪进程运行所需的所有状态信息。这种状态，也就是上下文，包括许多信息，比如PC和寄存器的当前值，以及主存的内容。在任何一个时刻，但处理器系统都只能执行一个进程的代码。当操作系统决定把控制全从当前进程转移到某一个新进程时，就会进行<code>上下文的切换</code>，即保存当前进程的上下文和切换新进程的上下文，然后将控制权给新进程。新进程就会从上次停止的地方开始。</li>
+<li>线程：一个进程实际上是由多个称为线程的<code>执行单元</code>组成的，每个线程都运行在进程的上下文中，并共享同样的代码和全局变量。</li>
+<li><p><code>虚拟内存</code>：虚拟内存是一个抽象的概念，它伪每个进程提供了一个假象，即每个进程都在独占地使用主存。每个进程看到的内存都是一致的，称为虚拟地址空间。</p>
+<p>  <img src="$res/TIM%E6%88%AA%E5%9B%BE20180123160730.png" alt="进程的虚拟内存空间"></p>
+<ul>
+<li>程序代码和数据：所有的程序，代码是从同一固定的地址开始，紧接着的是和C<code>全局变量</code>相对应的数据位置。代码和数据区是直接按照可执行目标文件的内容初始化的。</li>
+<li>堆：代码和数据区后紧接着<code>运行时堆</code>，代码和数据区在进程一开始运行时就被指定了大小，堆与之不同，当调用像malloc和free这样的函数时，堆可以在运行时动态地扩展和收缩。</li>
+<li>共享库：在地址空间地中间部分是一块用来存放C标准库和数学库这样地共享库的代码和数据区。</li>
+<li>栈：位于用户虚拟地址<code>顶部</code>的是用户栈，编译器用它来实现函数调用。和堆一样，用户栈在程序执行期间间可以动态地扩展和收缩。特别地，每次我们调用一个函数时，栈就会增长；从一个函数返回时，栈就会收缩。</li>
+<li>内核虚拟内存：地址空间顶部的区域是为内核保留的。不允许应用程序读取这个区域的内容或者直接调用内核代码定义的函数。相反，它们必须调用内核来执行这些操作。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>文件：文件就是字节序列，仅此而已。</li>
+</ul>
+
+    
+    </div>
+    
+    
+</article>
+
+
+
+
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
             <a href="/2018/07/30/hello-world/" itemprop="url">Hello World</a>
         
     </h1>
@@ -114,7 +199,7 @@
         <span class="column is-narrow">
             
             
-            a minute de lectura (Alrededor de 121 palabras)
+            a minute read (About 121 words)
         </span>
         
     </div>
@@ -241,7 +326,7 @@
     <div class="searchbox-mask"></div>
     <div class="searchbox-container ins-search-container">
         <div class="searchbox-input-wrapper">
-            <input type="text" class="searchbox-input ins-search-input" placeholder="Escribe algo..." />
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
             <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="searchbox-result-wrapper ins-section-wrapper">
@@ -254,10 +339,10 @@
         var INSIGHT_CONFIG = {
             TRANSLATION: {
                 POSTS: 'Posts',
-                PAGES: 'Páginas',
-                CATEGORIES: 'Categorías',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
                 TAGS: 'Tags',
-                UNTITLED: '(Sin título)',
+                UNTITLED: '(Untitled)',
             },
             CONTENT_URL: '/content.json',
         };
